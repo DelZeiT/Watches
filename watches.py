@@ -2,6 +2,7 @@ from tkinter import *
 from datetime import *
 
 now = datetime.now()
+today = date.today()
 
 # окно
 window = Tk()
@@ -17,8 +18,11 @@ def tick():
 
 
 # Label
-lbl_time = Label(window, font='Arial 20')
+lbl_time = Label(window, font='Arial 20', background="#008000", foreground="#FFFF00")
 lbl_time.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+lbl_date = Label(window, text=today, font='Arial 10')
+lbl_date.grid(column=0, row=0)
 
 # запуск функции
 tick()
