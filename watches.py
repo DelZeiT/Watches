@@ -1,5 +1,6 @@
 from tkinter import *
 from datetime import *
+import winsound
 
 now = datetime.now()
 today = date.today()
@@ -18,6 +19,7 @@ def tick():
     lbl_hour_int['text'] = now.hour
     lbl_minute_int['text'] = now.minute
     lbl_second_int['text'] = now.second
+    winsound.Beep(250, 400)
 
 
 # Label
