@@ -19,7 +19,11 @@ def tick():
     lbl_hour_int['text'] = now.hour
     lbl_minute_int['text'] = now.minute
     lbl_second_int['text'] = now.second
-    winsound.Beep(250, 400)
+    winsound.Beep(250, 300)
+    if now.minute == 0 and now.second == 0:    #
+        winsound.Beep(130, 500)
+    if now.second == 0:
+        winsound.Beep(190, 400)
 
 
 # Label
