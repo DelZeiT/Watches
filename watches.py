@@ -11,54 +11,10 @@ window.geometry('500x400')
 window.configure(bg='#333333')
 
 # текстовое поле для ввода времени, на которое нужно установить будильник
-hour_input = Entry(window, width=13)
-hour_input.place(relx=0.2, rely=0.8)
 
-minute_input = Entry(window, width=13)
-minute_input.place(relx=0.4, rely=0.8)
+alarm_input = Entry(window, width=13)
+alarm_input.place(relx=0.4, rely=0.8)
 
-sec_input = Entry(window, width=13)
-sec_input.place(relx=0.6, rely=0.8)
-
-
-# функция установки будильника
-def set_alarm():
-    now = datetime.now()
-
-    # получаем данные с поля ввода
-    hour_alarm = int(hour_input.get())
-    minute_alarm = int(minute_input.get())
-    sec_alarm = int(sec_input.get())
-
-    # получаем текущее время по отдельности
-    current_hour = now.hour
-    current_min = now.minute
-    current_sec = now.second
-
-    # время будильника в секундах
-    sec_alarm = (hour_alarm * 60 + minute_alarm) * 60
-
-    # текщее время в секундах
-    current_sec = (current_hour * 60 + current_min) * 60
-
-    # таймер
-    taimer = sec_alarm - current_sec
-
-    window.after(taimer * 1000, alarm)
-
-    # стираем введенный текст с поля ввода
-    hour_input.delete(0, END)
-    minute_input.delete(0, END)
-    sec_input.delete(0, END)
-
-# кнопка "Установить будильник"
-btn = Button(window, text='Установить будильник', command=set_alarm)
-btn.place(relx=0.35, rely=0.9)
-
-
-# функция вызова будильника
-def alarm():
-    winsound.Beep(250, 10000)
 
 
 # функция обновления времени каждую секунду
@@ -78,6 +34,42 @@ def tick():
 
     if now.second == 0:  # если наступила новая минута
         winsound.Beep(190, 400)
+
+
+# функция установки будильника
+def set_alarm():
+    while True:
+        now = datetime.now()
+
+        alarm_str = alarm_input.get()
+
+        hours, minutes, seconds = alarm_str[0:2], alarm_str[3:5], alarm_str[6:8]
+
+        # Преобразовать часы, минуты и секунды в числа
+        alarm_hours = int(hours)
+        alarm_minutes = int(minutes)
+        alarm_seconds = int(seconds)
+
+        alarm_time = datetime.now().replace(hour=alarm_hours, minute=alarm_minutes, second=alarm_seconds, microsecond=0)
+
+        # таймер
+        time_difference = alarm_time - now
+
+        window.after(int(time_difference.total_seconds()) * 1000, set_alarm)
+
+        # стираем введенный текст с поля ввода
+        alarm_input.delete(0, END)
+
+
+# кнопка "Установить будильник"
+btn = Button(window, text='Установить будильник', command=set_alarm)
+btn.place(relx=0.35, rely=0.9)
+
+
+# функция вызова будильника
+def alarm():
+    winsound.Beep(250, 5000)
+
 
 # виджет часов
 lbl_hour_int = Label(window, font='Arial 50', bg="#00CC99", fg="#FFFFFF")
